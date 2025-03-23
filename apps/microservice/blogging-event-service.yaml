@@ -15,7 +15,7 @@ spec:
         app: blogging-event-service
     spec:
       containers:
-        - image: us-west1-docker.pkg.dev/blogapi-miyamo-today/blogging-event-service/blogging-event-service:3683de60050705d221d6a1487c6a3cc29cec852e
+        - image: us-west1-docker.pkg.dev/blogapi-miyamo-today/blogging-event-service/blogging-event-service:4d6f46383fefecaf684ac8a4f6a57cadfc604ec2
           name: blogging-event-service
           ports:
             - containerPort: 3000
