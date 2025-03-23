@@ -15,7 +15,7 @@ spec:
         app: federator
     spec:
       containers:
-        - image: example.com/foo/bar:latest  # replace later
+        - image: example.com/foo/bar:latest
           name: federator
           ports:
             - containerPort: 3000
