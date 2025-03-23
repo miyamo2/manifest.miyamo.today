@@ -41,7 +41,7 @@ jobs:
           IMAGE: ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ github.event.client_payload.target }}/${{ github.event.client_payload.target }}:${{ env.TAG }}
         uses: mikefarah/yq@8bf425b4d1344db7cd469a8d10a390876e0c77fd # v4.45.1
         with:
-          cmd: yq　e -i '(.spec.template.spec.containers[] | select(.name == "${{ github.event.client_payload.target }}").image) = "${{ env.IMAGE }}"' ${{ env.file }}
+          cmd: yq eval -i '(.spec.template.spec.containers[] | select(.name == "${{ github.event.client_payload.target }}").image) = "${{ env.IMAGE }}"' ${{ env.file }}
 
       - name: commit
         env:
