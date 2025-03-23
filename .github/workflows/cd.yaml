@@ -31,14 +31,18 @@ jobs:
           if [ "$TARGET" = "article-service"]; then
             echo "file=apps/microservice/article-service.yaml" >> $GITHUB_OUTPUT
             exit 0
+          fi
           if [ "$TARGET" = "tag-service"]; then
             echo "file=apps/microservice/tag-service.yaml" >> $GITHUB_OUTPUT
             exit 0
+          fi
           if [ "$TARGET" = "blogging-event-service"]; then
             echo "file=apps/microservice/blogging-event-service.yaml" >> $GITHUB_OUTPUT
             exit 0
+          fi
           if [ "$TARGET" = "federator"]; then
             echo "file=apps/federator/federator.yaml" >> $GITHUB_OUTPUT
+          fi
 
       - name: Update tag
         env:
