@@ -22,7 +22,9 @@ spec:
           resources:
             limits:
               memory: 128Mi
-              cpu: 64m
+              cpu: 32m
+            requests:
+              cpu: 20m
           readinessProbe:
             grpc:
               port: 80
