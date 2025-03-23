@@ -22,7 +22,7 @@ jobs:
         id: get_tag
         run: |
           TAG=$(echo ${{ github.event.client_payload.tag }})
-          echo "tag=$TAG" >> GITHUB_OUTPUT
+          echo "tag=$TAG" >> $GITHUB_ENV
 
       - if: github.event.client_payload.target == 'article-service'
         run: echo "file=apps/microservice/article-service.yaml" >> $GITHUB_ENV
@@ -45,7 +45,7 @@ jobs:
 
       - name: commit
         env:
-          TAG: ${{ steps.get_tag.outputs.tag }}
+          TAG: ${{ steps.get_tag.env.tag }}
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
