@@ -48,10 +48,10 @@ jobs:
       - name: commit
         env:
           TAG: ${{ steps.get_tag.outputs.tag }}
-          TARGET_FILE: ${{ steps.get_file.outputs.file }}
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add ./apps
-          git commit -m "chore(${{ env.TARGET_FILE }}): bump tag to ${{ env.TAG }}"
+          commit_message="chore(${{ env.file }}): bump tag to ${{ env.TAG }}"
+          git commit -m "$commit_message"
           git push origin HEAD:main
