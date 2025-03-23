@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: tag-service
+  name: tag-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tag-service
+  template:
+    metadata:
+      labels:
+        app: tag-service
+    spec:
+      containers:
+        - image: example.com/foo/bar:latest  # replace later
+          name: tag-service
+          ports:
+            - containerPort: 3000
+          resources:
+            limits:
+              memory: 256Mi
+              cpu: 128m
+          readinessProbe:
+            grpc:
+              port: 80
+          livenessProbe:
+            grpc:
+              port: 80
+          startupProbe:
+            grpc:
+              port: 80
+            failureThreshold: 30
+            periodSeconds: 10
+            timeoutSeconds: 1
+          envFrom:
+            - secretRef:
+                name: secret-tag-service
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app: tag-service
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: tag-service
+  name: tag-service
+spec:
+  ports:
+    - port: 80
+  selector:
+    app: tag-service
+  type: ClusterIP
+
+# secret example
+# ---
+# apiVersion: v1
+# kind: Secret
+# metadata:
+#   name: secret-tag-service
+# data:
+#   COCKROACHDB_DSN: foo
+#   SERVICE_NAME: bar
+#   NEW_RELIC_CONFIG_APP_NAME: baz
+#   NEW_RELIC_CONFIG_LICENSE_KEY: qux
+#   PORT: foobar

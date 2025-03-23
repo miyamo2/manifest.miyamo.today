@@ -1,0 +1,95 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: federator
+  name: federator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: federator
+  template:
+    metadata:
+      labels:
+        app: federator
+    spec:
+      containers:
+        - image: example.com/foo/bar:latest  # replace later
+          name: federator
+          ports:
+            - containerPort: 3000
+          resources:
+            limits:
+              memory: 256Mi
+              cpu: 128m
+          startupProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            failureThreshold: 30
+            periodSeconds: 10
+            timeoutSeconds: 1
+          envFrom:
+            - secretRef:
+                name: secret-federator
+            - secretRef:
+                name: secret-aws-credentials
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app: federator
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: federator
+  name: federator
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 3000
+  selector:
+    app: federator
+  type: NodePort
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: federator
+  annotations:
+    nginx.org/websocket-services: "federator"
+spec:
+  ingressClassName: "nginx"
+  rules:
+    - host: federator
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: federator
+                port:
+                  number: 80
+
+# secret example
+# ---
+# apiVersion: v1
+# kind: Secret
+# metadata:
+#   name: secret-federator
+# data:
+#   NEW_RELIC_CONFIG_APP_NAME: foo
+#   NEW_RELIC_CONFIG_LICENSE: bar
+#   ARTICLE_SERVICE_ADDRESS: baz
+#   TAG_SERVICE_ADDRESS: qux
+#   BLOGGING_EVENT_SERVICE_ADDRESS: foobar
+#   PORT: foobaz

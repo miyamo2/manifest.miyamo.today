@@ -1,0 +1,78 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: blogging-event-service
+  name: blogging-event-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: blogging-event-service
+  template:
+    metadata:
+      labels:
+        app: blogging-event-service
+    spec:
+      containers:
+        - image: example.com/foo/bar:latest  # replace later
+          name: blogging-event-service
+          ports:
+            - containerPort: 3000
+          resources:
+            limits:
+              memory: 256Mi
+              cpu: 128m
+          readinessProbe:
+            grpc:
+              port: 80
+          livenessProbe:
+            grpc:
+              port: 80
+          startupProbe:
+            grpc:
+              port: 80
+            failureThreshold: 30
+            periodSeconds: 10
+            timeoutSeconds: 1
+          envFrom:
+            - secretRef:
+                name: secret-blogging-event-service
+            - secretRef:
+                name: secret-aws-credentials
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app: blogging-event-service
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: blogging-event-service
+  name: blogging-event-service
+spec:
+  ports:
+    - port: 80
+  selector:
+    app: blogging-event-service
+  type: ClusterIP
+
+# secret example
+# ---
+# apiVersion: v1
+# kind: Secret
+# metadata:
+#   name: secret-blogging-event-service
+# data:
+#   SERVICE_NAME: bar
+#   NEW_RELIC_CONFIG_APP_NAME: baz
+#   NEW_RELIC_CONFIG_LICENSE_KEY: qux
+#   PORT: foobar
+#   BLOGGING_EVENTS_TABLE_NAME: foo
+#   S3_BUCKET: bar
+#   CDN_HOST: baz
