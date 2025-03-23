@@ -15,7 +15,7 @@ spec:
         app: blogging-event-service
     spec:
       containers:
-        - image: example.com/foo/bar:latest  # replace later
+        - image: 'us-west1-docker.pkg.dev/blogapi-miyamo-today/blogging-event-service/blogging-event-service:' # replace later
           name: blogging-event-service
           ports:
             - containerPort: 3000
@@ -47,7 +47,6 @@ spec:
           labelSelector:
             matchLabels:
               app: blogging-event-service
-
 ---
 apiVersion: v1
 kind: Service
@@ -61,7 +60,6 @@ spec:
   selector:
     app: blogging-event-service
   type: ClusterIP
-
 # secret example
 # ---
 # apiVersion: v1
