@@ -15,7 +15,7 @@ spec:
         app: article-service
     spec:
       containers:
-        - image: example.com/foo/bar:latest  # replace later
+        - image: 'us-west1-docker.pkg.dev/blogapi-miyamo-today/article-service/article-service:' # replace later
           name: article-service
           ports:
             - containerPort: 3000
@@ -45,7 +45,6 @@ spec:
           labelSelector:
             matchLabels:
               app: article-service
-
 ---
 apiVersion: v1
 kind: Service
@@ -59,7 +58,9 @@ spec:
   selector:
     app: article-service
   type: ClusterIP
-
+  template:
+    spec:
+      containers: []
 # secret example
 # ---
 # apiVersion: v1
