@@ -24,35 +24,26 @@ jobs:
           TAG=$(echo ${{ github.event.client_payload.tag }})
           echo "tag=$TAG" >> GITHUB_OUTPUT
 
-      - name: Get File
-        id: get_file
-        run: |
-          TARGET=$(echo ${{ github.event.client_payload.target }})
-          if [ "$TARGET" = "article-service"]; then
-            echo "file=apps/microservice/article-service.yaml" >> $GITHUB_OUTPUT
-            exit 0
-          fi
-          if [ "$TARGET" = "tag-service"]; then
-            echo "file=apps/microservice/tag-service.yaml" >> $GITHUB_OUTPUT
-            exit 0
-          fi
-          if [ "$TARGET" = "blogging-event-service"]; then
-            echo "file=apps/microservice/blogging-event-service.yaml" >> $GITHUB_OUTPUT
-            exit 0
-          fi
-          if [ "$TARGET" = "federator"]; then
-            echo "file=apps/federator/federator.yaml" >> $GITHUB_OUTPUT
-          fi
+      - if: github.event.client_payload.target == 'article-service'
+        run: echo "file=apps/microservice/article-service.yaml" >> $GITHUB_ENV
+
+      - if: github.event.client_payload.target == 'tag-service'
+        run: echo "file=apps/microservice/tag-service.yaml" >> $GITHUB_ENV
+
+      - if: github.event.client_payload.target == 'blogging-event-service'
+        run: echo "file=apps/microservice/blogging-event-service.yaml" >> $GITHUB_ENV
+
+      - if: github.event.client_payload.target == 'federator'
+        run: echo "file=apps/federator/federator.yaml" >> $GITHUB_ENV
 
       - name: Update tag
         env:
           REPOSITORY: ${{ github.event.client_payload.target }}
-          IMAGE_NAME: ${{ github.event.client_payload.image_name }}
+          IMAGE_NAME: ${{ github.event.client_payload.target }}
           TAG: ${{ steps.get_tag.outputs.tag }}
-          TARGET_FILE: ${{ steps.get_file.outputs.file }}
         uses: mikefarah/yq@8bf425b4d1344db7cd469a8d10a390876e0c77fd # v4.45.1
         with:
-          cmd: IMAGE_TAG=' ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.IMAGE_NAME }}:${{ env.TAG }}' yq eval '.containers[].image = env(IMAGE_TAG)' -i ${{ env.TARGET_FILE }}
+          cmd: IMAGE_TAG=' ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.IMAGE_NAME }}:${{ env.TAG }}' yq eval '.containers[].image = env(IMAGE_TAG)' -i ${{ env.file }}
 
       - name: commit
         env:
