@@ -21,8 +21,8 @@ spec:
             - containerPort: 3000
           resources:
             limits:
-              memory: 256Mi
-              cpu: 128m
+              memory: 128Mi
+              cpu: 64m
           startupProbe:
             httpGet:
               path: /health
