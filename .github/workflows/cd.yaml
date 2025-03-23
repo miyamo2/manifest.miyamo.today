@@ -28,16 +28,16 @@ jobs:
         id: get_file
         run: |
           TARGET=$(echo ${{ github.event.client_payload.target }})
-          if ["$TARGET" == "article-service"]; then
+          if [ "$TARGET" = "article-service"]; then
             echo "file=apps/microservice/article-service.yaml" >> $GITHUB_OUTPUT
             exit 0
-          if ["$TARGET" == "tag-service"]; then
+          if [ "$TARGET" = "tag-service"]; then
             echo "file=apps/microservice/tag-service.yaml" >> $GITHUB_OUTPUT
             exit 0
-          if ["$TARGET" == "blogging-event-service"]; then
+          if [ "$TARGET" = "blogging-event-service"]; then
             echo "file=apps/microservice/blogging-event-service.yaml" >> $GITHUB_OUTPUT
             exit 0
-          if ["$TARGET" == "federator"]; then
+          if [ "$TARGET" = "federator"]; then
             echo "file=apps/federator/federator.yaml" >> $GITHUB_OUTPUT
 
       - name: Update tag
