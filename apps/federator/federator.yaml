@@ -63,7 +63,7 @@ kind: Ingress
 metadata:
   name: federator
   annotations:
-    argocd:argoproj:io/skip-health-check: "true"
+    argocd.argoproj.io/ignore-healthcheck: "true"
 spec:
   ingressClassName: "nginx"
   rules:
