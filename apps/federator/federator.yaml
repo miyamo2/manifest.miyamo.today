@@ -55,7 +55,7 @@ spec:
   ports:
     - port: 80
       protocol: TCP
-      targetPort: 3000
+      targetPort: 30000
   selector:
     app: federator
   type: NodePort
