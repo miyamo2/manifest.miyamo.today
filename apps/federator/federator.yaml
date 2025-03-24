@@ -69,7 +69,8 @@ metadata:
 spec:
   ingressClassName: "nginx"
   rules:
-    - http:
+    - host: "*.miyamo.today"
+      http:
         paths:
           - path: /
             pathType: Prefix
