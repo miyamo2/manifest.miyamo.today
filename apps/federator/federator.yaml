@@ -69,7 +69,8 @@ metadata:
 spec:
   ingressClassName: "nginx"
   rules:
-    - http:
+    - host: federator
+      http:
         paths:
           - pathType: Prefix
             path: /
