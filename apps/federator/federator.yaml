@@ -18,7 +18,7 @@ spec:
         - image: us-west1-docker.pkg.dev/blogapi-miyamo-today/federator/federator:4d6f46383fefecaf684ac8a4f6a57cadfc604ec2
           name: federator
           ports:
-            - containerPort: 3000
+            - containerPort: 80
           resources:
             limits:
               memory: 128Mi
@@ -28,7 +28,7 @@ spec:
           startupProbe:
             httpGet:
               path: /health
-              port: 3000
+              port: 80
             failureThreshold: 30
             periodSeconds: 10
             timeoutSeconds: 1
@@ -54,8 +54,6 @@ metadata:
 spec:
   ports:
     - port: 80
-      protocol: TCP
-      targetPort: 30000
   selector:
     app: federator
   type: NodePort
@@ -64,8 +62,6 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: federator
-  annotations:
-    nginx.org/websocket-services: "federator"
 spec:
   ingressClassName: "nginx"
   rules:
