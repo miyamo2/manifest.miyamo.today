@@ -10,6 +10,9 @@ on:
 
 permissions: write-all
 
+concurrency:
+  group: ${{ github.workflow }}
+
 jobs:
   apply:
     runs-on: ubuntu-latest
