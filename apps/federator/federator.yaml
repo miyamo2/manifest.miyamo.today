@@ -15,7 +15,7 @@ spec:
         app: federator
     spec:
       containers:
-        - image: us-west1-docker.pkg.dev/blogapi-miyamo-today/federator/federator:6ef3a77b38e5b14897c8e4e8a89a8b04cb259c24
+        - image: us-west1-docker.pkg.dev/blogapi-miyamo-today/federator/federator:c856d006e8370710b515badfddd5eec106655d84
           name: federator
           ports:
             - containerPort: 80
