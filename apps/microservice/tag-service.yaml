@@ -15,7 +15,7 @@ spec:
         app: tag-service
     spec:
       containers:
-        - image: us-west1-docker.pkg.dev/blogapi-miyamo-today/tag-service/tag-service:dab85cc1e99edd4f93da87d80bf0be2de89e5cda
+        - image: us-west1-docker.pkg.dev/blogapi-miyamo-today/tag-service/tag-service:f732a49d19e19e027f9fe2baa4c44e811f3849b5
           name: tag-service
           ports:
             - containerPort: 3000
