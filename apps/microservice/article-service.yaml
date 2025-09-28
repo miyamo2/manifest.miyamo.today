@@ -15,7 +15,7 @@ spec:
         app: article-service
     spec:
       containers:
-        - image: us-west1-docker.pkg.dev/blogapi-miyamo-today/article-service/article-service:58ce7fbca79b60b84eef36302eaf5f436c2f7241
+        - image: ghcr.io/miyamo2/blogapi.miyamo.today:article-service-ba972410e59ee63cffc4e88c4eb0c2eacb196b52
           name: article-service
           ports:
             - containerPort: 3000
