@@ -35,7 +35,7 @@ spec:
   successfulJobsHistoryLimit: 3 # Optional. Default: 100. How many completed jobs should be kept.
   failedJobsHistoryLimit: 2 # Optional. Default: 100. How many failed jobs should be kept.
   triggers:
-    - type: aws-dynamodb
+    - type: aws-dynamodb-streams
       authenticationRef:
         name: read-model-updater-trigger-auth-aws-credentials
       metadata:
