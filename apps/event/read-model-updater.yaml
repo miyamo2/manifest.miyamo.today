@@ -14,14 +14,14 @@ spec:
 apiVersion: keda.sh/v1alpha1
 kind: ScaledJob
 metadata:
-  name:  read-model-updater
+  name: read-model-updater
 spec:
   jobTargetRef:
     template:
       spec:
         containers:
           - name: read-model-updater
-            image: ghcr.io/miyamo2/blogapi-miyamo-today/read-model-updater:noop
+            image: ghcr.io/miyamo2/blogapi.miyamo.today:read-model-updater-7f83afe0354d4e44c1fb9a6bc52a1c43bb3107c9
             imagePullPolicy: Always
             envFrom:
               - secretRef:
@@ -30,10 +30,10 @@ spec:
                   name: secret-aws-credentials
         restartPolicy: Never
     backoffLimit: 4
-  pollingInterval: 10             # Optional. Default: 30 seconds
-  maxReplicaCount: 30             # Optional. Default: 100
-  successfulJobsHistoryLimit: 3   # Optional. Default: 100. How many completed jobs should be kept.
-  failedJobsHistoryLimit: 2       # Optional. Default: 100. How many failed jobs should be kept.
+  pollingInterval: 10 # Optional. Default: 30 seconds
+  maxReplicaCount: 30 # Optional. Default: 100
+  successfulJobsHistoryLimit: 3 # Optional. Default: 100. How many completed jobs should be kept.
+  failedJobsHistoryLimit: 2 # Optional. Default: 100. How many failed jobs should be kept.
   triggers:
     - type: aws-dynamodb
       authenticationRef:
