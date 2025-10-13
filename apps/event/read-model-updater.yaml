@@ -40,5 +40,5 @@ spec:
         name: read-model-updater-trigger-auth-aws-credentials
       metadata:
         awsRegion: ap-northeast-1
-        tableName: blogging_events-prd
+        tableName: blogging_events-prod
         shardCount: "2"
