@@ -15,7 +15,7 @@ spec:
         app: tag-service
     spec:
       containers:
-        - image: ghcr.io/miyamo2/blogapi.miyamo.today:tag-service-ba972410e59ee63cffc4e88c4eb0c2eacb196b52
+        - image: ghcr.io/miyamo2/blogapi.miyamo.today:tag-service-4e17bf6fcaad29fe7ddb355a71dd2915155acd30
           name: tag-service
           ports:
             - containerPort: 3000
