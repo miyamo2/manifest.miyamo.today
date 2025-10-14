@@ -17,6 +17,8 @@ metadata:
   name: read-model-updater
 spec:
   jobTargetRef:
+    parallelism: 1
+    completions: 1
     template:
       spec:
         containers:
