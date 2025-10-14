@@ -33,7 +33,7 @@ spec:
         restartPolicy: Never
     backoffLimit: 4
   pollingInterval: 10 # Optional. Default: 30 seconds
-  maxReplicaCount: 30 # Optional. Default: 100
+  maxReplicaCount: 1
   successfulJobsHistoryLimit: 3 # Optional. Default: 100. How many completed jobs should be kept.
   failedJobsHistoryLimit: 2 # Optional. Default: 100. How many failed jobs should be kept.
   triggers:
@@ -43,4 +43,5 @@ spec:
       metadata:
         awsRegion: ap-northeast-1
         tableName: blogging_events-prod
-        shardCount: "2"
+        shardCount: "100"
+        activationShardCount: "1"
