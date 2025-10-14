@@ -15,7 +15,7 @@ spec:
         app: article-service
     spec:
       containers:
-        - image: ghcr.io/miyamo2/blogapi.miyamo.today:article-service-ba972410e59ee63cffc4e88c4eb0c2eacb196b52
+        - image: ghcr.io/miyamo2/blogapi.miyamo.today:article-service-4e17bf6fcaad29fe7ddb355a71dd2915155acd30
           name: article-service
           ports:
             - containerPort: 3000
