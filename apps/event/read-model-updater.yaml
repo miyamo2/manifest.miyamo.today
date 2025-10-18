@@ -44,4 +44,3 @@ spec:
         awsRegion: ap-northeast-1
         tableName: blogging_events-prod
         shardCount: "100"
-        activationShardCount: "1"
