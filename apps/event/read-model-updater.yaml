@@ -23,7 +23,7 @@ spec:
       spec:
         containers:
           - name: read-model-updater
-            image: ghcr.io/miyamo2/blogapi.miyamo.today:read-model-updater-639767fa9d41144af79a7cc4933e52ce7c376b31
+            image: ghcr.io/miyamo2/blogapi.miyamo.today:read-model-updater-39854434cf9d888c3a44efbf60819f3eac36c052
             imagePullPolicy: Always
             envFrom:
               - secretRef:
