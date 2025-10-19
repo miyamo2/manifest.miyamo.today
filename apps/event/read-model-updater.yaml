@@ -18,6 +18,7 @@ metadata:
 spec:
   scaleTargetRef:
     name: read-model-updater
+  maxReplicaCount: 1
   triggers:
     - type: aws-dynamodb-streams
       authenticationRef:
