@@ -50,16 +50,6 @@ jobs:
         run: echo "file=apps/event/read-model-updater.yaml" >> $GITHUB_ENV
 
       - name: Update tag
-        id: update-tag-scaled-job
-        if:  github.event.client_payload.target == 'read-model-updater'
-        env:
-          IMAGE: ghcr.io/miyamo2/blogapi.miyamo.today:${{ github.event.client_payload.target }}-${{ env.tag }}
-        uses: mikefarah/yq@8bf425b4d1344db7cd469a8d10a390876e0c77fd # v4.45.1
-        with:
-          cmd: yq eval -i '(. | select(.kind == "ScaledJob") | .spec.jobTargetRef.template.spec.containers[] | select(.name == "${{ github.event.client_payload.target }}").image) = "${{ env.IMAGE }}"' ${{ env.file }}
-
-      - name: Update tag
-        if: steps.update-tag-scaled-job.conclusion == 'skipped'
         env:
           IMAGE: ghcr.io/miyamo2/blogapi.miyamo.today:${{ github.event.client_payload.target }}-${{ env.tag }}
         uses: mikefarah/yq@8bf425b4d1344db7cd469a8d10a390876e0c77fd # v4.45.1

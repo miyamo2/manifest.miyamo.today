@@ -12,30 +12,12 @@ spec:
       key: AWS_SECRET_ACCESS_KEY
 ---
 apiVersion: keda.sh/v1alpha1
-kind: ScaledJob
+kind: ScaledObject
 metadata:
-  name: read-model-updater
+  name:  read-model-updater-scaledobject
 spec:
-  jobTargetRef:
-    parallelism: 1
-    completions: 1
-    template:
-      spec:
-        containers:
-          - name: read-model-updater
-            image: ghcr.io/miyamo2/blogapi.miyamo.today:read-model-updater-36e2814d47d9fc535bf8f2c00dcd17a7b033a03e
-            imagePullPolicy: Always
-            envFrom:
-              - secretRef:
-                  name: secret-read-model-updater
-              - secretRef:
-                  name: secret-aws-credentials
-        restartPolicy: Never
-    backoffLimit: 4
-  pollingInterval: 60 # Optional. Default: 30 seconds
-  maxReplicaCount: 1
-  successfulJobsHistoryLimit: 3 # Optional. Default: 100. How many completed jobs should be kept.
-  failedJobsHistoryLimit: 2 # Optional. Default: 100. How many failed jobs should be kept.
+  scaleTargetRef:
+    name: read-model-updater
   triggers:
     - type: aws-dynamodb-streams
       authenticationRef:
@@ -43,4 +25,30 @@ spec:
       metadata:
         awsRegion: ap-northeast-1
         tableName: blogging_events-prod
-        shardCount: "100"
+        shardCount: "2"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: read-model-updater
+  name: read-model-updater
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: read-model-updater
+  template:
+    metadata:
+      labels:
+        app: read-model-updater
+    spec:
+      containers:
+        - name: read-model-updater
+          image: ghcr.io/miyamo2/blogapi.miyamo.today:read-model-updater-36e2814d47d9fc535bf8f2c00dcd17a7b033a03e
+          imagePullPolicy: Always
+          envFrom:
+            - secretRef:
+                name: secret-read-model-updater
+            - secretRef:
+                name: secret-aws-credentials
