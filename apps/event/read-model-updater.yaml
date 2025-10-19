@@ -25,7 +25,7 @@ spec:
       metadata:
         awsRegion: ap-northeast-1
         tableName: blogging_events-prod
-        shardCount: "2"
+        shardCount: "100"
 ---
 apiVersion: apps/v1
 kind: Deployment
