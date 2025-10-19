@@ -14,7 +14,7 @@ spec:
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
-  name:  read-model-updater-scaledobject
+  name: read-model-updater-scaledobject
 spec:
   scaleTargetRef:
     name: read-model-updater
@@ -46,7 +46,7 @@ spec:
     spec:
       containers:
         - name: read-model-updater
-          image: ghcr.io/miyamo2/blogapi.miyamo.today:read-model-updater-36e2814d47d9fc535bf8f2c00dcd17a7b033a03e
+          image: ghcr.io/miyamo2/blogapi.miyamo.today:read-model-updater-6b4a254af64c3927a25ca26ee361d63afbcc9e4d
           imagePullPolicy: Always
           envFrom:
             - secretRef:
