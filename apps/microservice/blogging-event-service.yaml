@@ -4,6 +4,7 @@ metadata:
   labels:
     app: blogging-event-service
   name: blogging-event-service
+  namespace: blog
 spec:
   replicas: 2
   selector:
@@ -56,6 +57,7 @@ metadata:
   labels:
     app: blogging-event-service
   name: blogging-event-service
+  namespace: blog
 spec:
   ports:
     - port: 80

@@ -4,6 +4,7 @@ metadata:
   labels:
     app: tag-service
   name: tag-service
+  namespace: blog
 spec:
   replicas: 2
   selector:
@@ -54,6 +55,7 @@ metadata:
   labels:
     app: tag-service
   name: tag-service
+  namespace: blog
 spec:
   ports:
     - port: 80

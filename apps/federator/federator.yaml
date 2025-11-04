@@ -4,6 +4,7 @@ metadata:
   labels:
     app: federator
   name: federator
+  namespace: blog
 spec:
   replicas: 2
   selector:
@@ -51,6 +52,7 @@ metadata:
   labels:
     app: federator
   name: federator
+  namespace: blog
 spec:
   ports:
     - port: 80
@@ -62,12 +64,13 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: federator
+  namespace: blog
   annotations:
     argocd.argoproj.io/ignore-healthcheck: "true"
 spec:
-  ingressClassName: "nginx"
+  ingressClassName: "cloudflare"
   rules:
-    - host: "*.miyamo.today"
+    - host: "blogapi.miyamo.today"
       http:
         paths:
           - path: /
