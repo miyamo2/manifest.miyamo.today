@@ -16,7 +16,7 @@ spec:
         app: federator
     spec:
       containers:
-        - image: ghcr.io/miyamo2/blogapi.miyamo.today:federator-ba972410e59ee63cffc4e88c4eb0c2eacb196b52
+        - image: ghcr.io/miyamo2/blogapi.miyamo.today:federator-e9f8b9d9908b858b3dd750b0c144f0f89cebbd12
           name: federator
           ports:
             - containerPort: 80
