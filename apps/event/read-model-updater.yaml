@@ -6,10 +6,10 @@ metadata:
 spec:
   secretTargetRef:
     - parameter: awsAccessKeyID
-      name: secret-aws-credentials
+      name: blog-keda-credentials
       key: AWS_ACCESS_KEY_ID
     - parameter: awsSecretAccessKey
-      name: secret-aws-credentials
+      name: blog-keda-credentials
       key: AWS_SECRET_ACCESS_KEY
 ---
 apiVersion: keda.sh/v1alpha1
