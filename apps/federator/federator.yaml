@@ -68,7 +68,7 @@ metadata:
   annotations:
     argocd.argoproj.io/ignore-healthcheck: "true"
 spec:
-  ingressClassName: "cloudflare"
+  ingressClassName: "cloudflare-tunnel"
   rules:
     - host: "blogapi.miyamo.today"
       http:
