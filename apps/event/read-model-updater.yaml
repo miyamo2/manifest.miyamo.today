@@ -1,4 +1,18 @@
 apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: read-model-updater-trigger-auth-aws-credentials
+  namespace: blog
+spec:
+  secretTargetRef:
+    - parameter: awsAccessKeyID
+      name: blog-keda-credentials
+      key: AWS_ACCESS_KEY_ID
+    - parameter: awsSecretAccessKey
+      name: blog-keda-credentials
+      key: AWS_SECRET_ACCESS_KEY
+---
+apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
   name: read-model-updater-scaledobject
