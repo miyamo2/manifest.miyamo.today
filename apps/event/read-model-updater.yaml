@@ -11,6 +11,9 @@ spec:
     - parameter: awsSecretAccessKey
       name: blog-keda-credentials
       key: AWS_SECRET_ACCESS_KEY
+    - parameter: awsRegion
+      name: blog-keda-credentials
+      key: AWS_REGION
 ---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
