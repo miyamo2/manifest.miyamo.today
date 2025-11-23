@@ -6,13 +6,13 @@ metadata:
 spec:
   secretTargetRef:
     - parameter: awsAccessKeyID
-      name: secret-blog-trigger-auth
+      name: secret-aws-credentials
       key: AWS_ACCESS_KEY_ID
     - parameter: awsSecretAccessKey
-      name: secret-blog-trigger-auth
+      name: secret-aws-credentials
       key: AWS_SECRET_ACCESS_KEY
     - parameter: awsRegion
-      name: secret-blog-trigger-auth
+      name: secret-aws-credentials
       key: AWS_REGION
 ---
 apiVersion: keda.sh/v1alpha1
