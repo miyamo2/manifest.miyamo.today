@@ -1,8 +1,7 @@
 apiVersion: keda.sh/v1alpha1
-kind: TriggerAuthentication
+kind: ClusterTriggerAuthentication
 metadata:
   name: read-model-updater-trigger-auth-aws-credentials
-  namespace: blog
 spec:
   secretTargetRef:
     - parameter: awsAccessKeyID
@@ -31,6 +30,7 @@ spec:
         awsRegion: ap-northeast-1
       authenticationRef:
         name: read-model-updater-trigger-auth-aws-credentials
+        kind: ClusterTriggerAuthentication
 ---
 apiVersion: apps/v1
 kind: Deployment
