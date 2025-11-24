@@ -1,3 +1,37 @@
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: read-model-updater-trigger-auth-aws-credentials
+  namespace: blog
+spec:
+  secretTargetRef:
+    - parameter: awsAccessKeyID
+      name: secret-aws-credentials
+      key: AWS_ACCESS_KEY_ID
+    - parameter: awsSecretAccessKey
+      name: secret-aws-credentials
+      key: AWS_SECRET_ACCESS_KEY
+    - parameter: awsRegion
+      name: secret-aws-credentials
+      key: AWS_REGION
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: read-model-updater-scaledobject
+  namespace: blog
+spec:
+  scaleTargetRef:
+    name: read-model-updater
+  triggers:
+    - type: aws-sqs-queue
+      metadata:
+        queueURLFromEnv: QUEUE_URL
+        queueLength: "5"
+        awsRegion: ap-northeast-1
+      authenticationRef:
+        name: read-model-updater-trigger-auth-aws-credentials
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -6,7 +40,7 @@ metadata:
   name: read-model-updater
   namespace: blog
 spec:
-  replicas: 1
+  replicas: 0
   selector:
     matchLabels:
       app: read-model-updater
