@@ -19,6 +19,12 @@ spec:
         - name: read-model-updater
           image: ghcr.io/miyamo2/blogapi.miyamo.today:read-model-updater-0497a8780451053d8bc9e95ebc86cb63ea2271c9
           imagePullPolicy: Always
+          resources:
+            limits:
+              memory: 128Mi
+              cpu: 32m
+            requests:
+              cpu: 20m
           envFrom:
             - secretRef:
                 name: secret-read-model-updater
